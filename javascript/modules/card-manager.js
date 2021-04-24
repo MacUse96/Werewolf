@@ -4,7 +4,7 @@ export class CardManager {
     constructor() {}
 
     static createCard(card) {
-        return new Card(card.role, card.team, card.description, card.quantity=0, card.isTypeOfWerewolf, card.custom, card.saved);
+        return new Card(card.role, card.team, card.description, card.quantity, card.isTypeOfWerewolf, card.custom, card.saved);
     }
 
     // builds element for the informational role modal on the setup page
@@ -39,7 +39,11 @@ export class CardManager {
 
         let cardClass = card.isTypeOfWerewolf ? "card card-werewolf" : "card";
         cardContainer.setAttribute("class", cardClass);
-        cardContainer.setAttribute("id", "card-" + index);
+        if (card.team === "good") {
+            cardContainer.setAttribute("id", "card-" + index);
+        } else {
+            cardContainer.setAttribute("id", "card-" + index);
+        }
         cardContainer.innerHTML =
             "<div class='card-top'>" +
             "<div class='card-header'>" +
@@ -61,10 +65,45 @@ export class CardManager {
         return cardContainer;
     }
 
-    static constructCustomCardIndicator() {
+    static constructCompactDeckBuilderElement(card, index) {
+        const cardContainer = document.createElement("div");
+
+        const quantityClass = card.team === "good" ? "card-quantity quantity-village" : "card-quantity quantity-wolf";
+
+        let cardClass = card.isTypeOfWerewolf ? "compact-card card-werewolf" : "compact-card";
+        cardContainer.setAttribute("class", cardClass);
+        if (card.team === "good") {
+            cardContainer.setAttribute("id", "card-" + index);
+        } else {
+            cardContainer.setAttribute("id", "card-" + index);
+        }
+        cardContainer.innerHTML =
+            "<div class='compact-card-left'>" +
+                "<p>-</p>" +
+            "</div>" +
+            "<div class='compact-card-header'>" +
+                "<p class='card-role'>" + card.role + "</p>" +
+                "<div class='" + quantityClass + "'>" + card.quantity + "</div>" +
+            "</div>" +
+            "<div class='compact-card-right'>" +
+            "<p>+</p>" +
+            "</div>";
+        return cardContainer;
+    }
+
+    static constructCustomCardIndicator(isCondensed, team) {
         let customCard = document.createElement("div");
-        customCard.classList.add("card", "custom-card");
-        customCard.setAttribute("id", "custom");
+        if (isCondensed) {
+            customCard.classList.add("compact-card", "custom-card");
+        } else {
+            customCard.classList.add("card", "custom-card");
+        }
+
+        if (team === "good") {
+            customCard.setAttribute("id", "custom-good");
+        } else {
+            customCard.setAttribute("id", "custom-evil");
+        }
 
         let cardHeader = document.createElement("h1");
         cardHeader.innerText = "Add Custom Role";
@@ -87,7 +126,7 @@ class Card {
         this.isTypeOfWerewolf = isTypeOfWerewolf;
         this.team = team;
         this.description = description;
-        this.quantity = quantity;
+        this.quantity = quantity || 0;
         this.custom = custom;
         this.saved = saved;
     }

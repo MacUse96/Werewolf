@@ -18,6 +18,10 @@
         font-size: 20px;
     }
 
+    textarea {
+        font-size: 14px;
+    }
+
     #game-container {
         flex-direction: column;
     }
@@ -31,6 +35,22 @@
         width: 8em;
         height: 11.5em;
         font-size: 0.9em;
+    }
+
+    .custom-role-edit {
+        font-size: 15px;
+    }
+
+    .compact-card, .compact-card-header {
+        width: 9em;
+    }
+
+    #card-select-header #role-view-changer img {
+        width: 20px;
+    }
+
+    #role-view-changer div {
+        font-size: 14px;
     }
 
     .card-header > p {
@@ -136,9 +156,17 @@
         margin: 0.5em 0;
     }
 
+    #card-select-header #role-view-changer img {
+        width: 25px;
+    }
+
     .card-header > p {
         right: 17px;
         top: 30px;
+    }
+
+    textarea {
+        font-size: 1.1em;
     }
 
     #game-container #card-container {
@@ -156,6 +184,14 @@
         padding: 1em;
         font-size: 1.1em;
         margin: 0.5em;
+    }
+
+    .compact-card, .compact-card-header {
+        width: 11em;
+    }
+
+    .custom-role-edit {
+        font-size: 19px;
     }
 
     .disclaimer, .custom-card h1 {
@@ -202,7 +238,7 @@
         width: 35em;
     }
 
-    #main-buttons a {
+    #main-buttons a, #main-buttons button {
         max-width: 15em;
     }
 
@@ -250,7 +286,7 @@
         width: 15em;
         font-size: 14px;
         right: 106%;
-        bottom: -36%;
+/*      bottom: -36%;*/
     }
 
 }
@@ -288,7 +324,6 @@
 
 html, body {
     margin: 0 auto;
-    width: 100%;
     height: 100%;
     color: #bfb8b8;
     font-family: 'sitewide-sans-serif', sans-serif;
@@ -308,12 +343,24 @@ html, body {
 @keyframes slide-fade {
     from {
         opacity: 0;
-        transform: translateX(-80px)
+        transform: translateX(80px)
 
     }
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes slide-fade-remove {
+    from {
+        opacity: 1;
+        transform: translateX(0px)
+
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-80px);
     }
 }
 
@@ -326,6 +373,7 @@ html, body {
 #landing-container {
     width: 100%;
     height: 100%;
+    position: relative;
     text-align: center;
     background: linear-gradient(0deg, rgba(35,40,43,0.7959558823529411) 18%, rgba(131,131,131,0.6222864145658263) 100%);
 }
@@ -347,13 +395,43 @@ html, body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 5rem;
+    margin-bottom: 1.5em;
     font-size: 0.75em;
     text-align: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.bmc-button span:nth-child(1) {
+    font-size: 20px;
+}
+
+.bmc-button {
+    line-height: 35px !important;
+    height:40px !important;
+    text-decoration: none !important;
+    display:inline-flex !important;
+    align-items: center !important;
+    margin-bottom: 3em !important;
+    color:#ffffff !important;
+    background-color:#FF5F5F !important;
+    border-radius: 5px !important;
+    border: 1px solid transparent !important;
+    padding: 7px 15px 7px 10px !important;
+    font-size: 15px !important;
+    box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+    -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+    font-family: sitewide-sans-serif, sans-serif !important;
+    -webkit-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+}
+
+.bmc-button:hover, .bmc-button:active, .bmc-button:focus {
+     -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+     text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+     opacity: 0.85 !important;color:#ffffff !important;
 }
 
 #footer div {
@@ -445,16 +523,15 @@ button {
     width: 15px;
 }
 
-#custom-roles img {
+img.custom-role-button {
     width: 25px;
 }
 
-#custom-roles .custom-role-edit {
+.custom-role-edit {
     display: flex;
     width: 100%;
     flex-direction: column;
     justify-content: space-around;
-    font-size: 19px;
     align-items: center;
     background-color: black;
     border-radius: 5px;
@@ -489,17 +566,21 @@ button {
     max-width: 7em;
 }
 
-#custom-roles .custom-role-edit div > img {
+.custom-role-edit div > img {
     margin: 0 1em;
     cursor: pointer;
     user-select: none;
 }
 
-#custom-roles .custom-role-edit div > img:hover {
+.custom-role-edit div > img:hover {
     filter: brightness(70%);
 }
 
-.card {
+#import-file-input {
+    display: none;
+}
+
+.card, .compact-card {
     text-align: center;
     cursor: pointer;
     position: relative;
@@ -509,6 +590,63 @@ button {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
     border-radius: 3px;
     user-select: none;
+}
+
+.compact-card {
+    display: flex;
+    height: max-content;
+    position: relative;
+}
+
+.compact-card h1 {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin: 0 10px 0 10px;
+}
+
+.compact-card .card-role {
+    color: #bfb8b8;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 8em;
+}
+
+.compact-card-right p {
+    font-size: 40px;
+    margin: 0 10px 0 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.compact-card-left p {
+    font-size: 40px;
+    margin: 0 0 0 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.compact-card-left, .compact-card-right {
+    width: 50%;
+}
+
+.compact-card .card-quantity {
+    text-align: center;
+    margin: 0;
+}
+
+.compact-card-header {
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+    text-align: center;
 }
 
 .card-werewolf {
@@ -523,13 +661,14 @@ button {
 .custom-card div {
     font-size: 40px;
     color: whitesmoke;
+    margin-right: 5px;
 }
 
 .custom-card h1 {
     color: whitesmoke;
 }
 
-.card:hover {
+.card:hover, .compact-card:hover {
     background-color: #55565c;
 }
 
@@ -615,11 +754,23 @@ button {
 }
 
 #card-select {
+    margin-bottom: 2em;
+}
+
+#card-select-good, #card-select-evil {
     display: flex;
     display: -webkit-flex;
     -webkit-flex-wrap: wrap;
-    margin-bottom: 3em;
 }
+
+#card-select > h2:nth-child(1) {
+    color: #4a6bff;
+}
+
+#card-select > h2:nth-child(3) {
+    color: #bd2a2a;
+}
+
 
 .app-btn-secondary {
     display: flex;
@@ -663,42 +814,75 @@ button {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-#main-buttons a:nth-child(1) {
-    animation: fadein 0.3s ease-in;
-    animation-fill-mode: backwards;
-}
-
-#main-buttons a:nth-child(2) {
-    animation: fadein 0.3s ease-in;
-    animation-fill-mode: backwards;
-    animation-delay: 0.1s;
-}
-
-#main-buttons a:nth-child(3) {
-    animation: fadein 0.3s ease-in;
-    animation-fill-mode: backwards;
-    animation-delay: 0.2s;
-}
-
-#main-buttons a:nth-child(4) {
-    animation: fadein 0.3s ease-in;
-    animation-fill-mode: backwards;
-    animation-delay: 0.3s;
+    max-width: 18em;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 #main-buttons button {
     width: 100%;
-    padding: 1.2em;
-    font-size: 1em;
+    padding: 1em;
+    font-size: 0.9em;
     box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.4);
     background-color: #992626;
     color: #bfb8b8;
 }
 
 #main-buttons a {
-    width: 75%;
+    width: 100%;
+}
+
+#game-mode-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#landing-container .slide-in {
+    animation: slide-fade 0.25s;
+    animation-delay: 0.125s;
+    animation-fill-mode: both;
+}
+
+#landing-container .slide-out {
+    animation: slide-fade-remove 0.25s;
+}
+
+
+#game-mode-select .game-mode {
+    width: 7em;
+    background-color: transparent;
+    color: whitesmoke;
+    border: 1px solid whitesmoke;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 5px;
+    margin-bottom: 0.5em;
+    border-radius: 5px;
+}
+
+#game-mode-select .game-mode:hover {
+    cursor: pointer;
+    background-color: #494f52;
+}
+
+#game-mode-select span {
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 0.2em;
+    text-align: left;
+    width: 100%;
+}
+
+#game-mode-select span:hover {
+    color: #333243;
 }
 
 #card-select-header {
@@ -710,14 +894,52 @@ button {
     flex-direction: column;
 }
 
-#card-select-header a {
+#card-select-header a, #landing-container #game-mode-select a:nth-child(2) {
     text-decoration: underline;
     color: #b8c4ff;
+}
+
+#landing-container #game-mode-select a:nth-child(2) {
+    text-decoration: underline;
+    color: #b8c4ff;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 1em;
 }
 
 #card-select-header span > div  {
     display: flex;
     align-items: center;
+}
+
+#card-select-header #role-view-changer img {
+    margin-left: 15px;
+}
+
+#role-view-changer div {
+    display: flex;
+    justify-content: space-around;
+    width: max-content;
+    margin: 0 15px 0 0;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.selected {
+    background: #494f52;
+}
+
+#role-view-changer div:hover {
+    cursor: pointer;
+    background-color: #494f52;
+}
+
+#role-view-changer {
+    margin: 15px 0 0 0;
+}
+
+#role-view-changer p {
+    margin: 0;
 }
 
 #card-select-header h3 {
@@ -729,10 +951,14 @@ button {
 #create-game-container button {
     padding: 0.8em;
     height: 3em;
-    width: fit-content;
+    width: max-content;
 }
 
 #edit-role-btn > img {
+    margin-left: 0.5em;
+}
+
+#import-role-btn > img {
     margin-left: 0.5em;
 }
 
@@ -848,7 +1074,6 @@ textarea {
     color: gray;
     padding: 0.9em;
     border-radius: 5px;
-    font-size: 1.1em;
 }
 
 .checkbox label::before{
@@ -963,6 +1188,57 @@ label {
     padding: 0.5em;
 }
 
+.import-failure {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: black;
+    border-radius: 5px;
+    margin: 0.3em;
+}
+
+.import-failure-label {
+    display: flex;
+    flex-direction: row;
+    width: 33%;
+}
+
+.import-failure-label p {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    white-space: nowrap;
+    max-width: 20em;
+}
+
+.import-failure-data {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.import-failure-data ul {
+    max-width: 40em;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px;
+    float: left;
+    position: relative;
+    z-index: 1;
+  }
+
+div.import-failure.warning .triangle {
+    border-color: #dbec3b transparent transparent #dbec3b;
+}
+
+div.import-failure.error .triangle {
+    border-color: #c7360a transparent transparent #c7360a;
+}
 
 /* lobby */
 
@@ -1330,6 +1606,10 @@ label {
     font-size: 40px;
 }
 
+.faq-question {
+    max-width: 60em;
+}
+
 #learn-container button, #faq-container button {
     margin-top: 1em;
 }
@@ -1430,6 +1710,10 @@ label {
     color: #bd2a2a;
 }
 
+.dead-player-no-reveals {
+    color: whitesmoke !important;
+}
+
 .alive-player-wolf, .dead-player-wolf {
     border: 2px solid #bd2a2a;
 }
@@ -1462,6 +1746,10 @@ label {
 .killed-role-custom {
     width: 190px;
     padding: 95px;
+}
+
+.killed-role-hidden {
+    padding-top: 3em;
 }
 
 @keyframes slide-fade-in-top {
